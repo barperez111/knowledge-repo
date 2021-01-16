@@ -118,8 +118,11 @@ class DbKnowledgeRepository(KnowledgeRepository):
     def _publish(self, path):  # Publish a post for general perusal
         # Latest revision for unpublished
         revision = self._kp_get_revision(path, self.PostStatus.UNPUBLISHED, enforce_exists=True)
-        if self.__get_post_status(path, revision) == self.PostStatus.UNPUBLISHED:
-            self.__set_post_status(path, status=self.PostStatus.PUBLISHED, revision=revision)
+        # overding knowledge repo native publish flow.
+        # currently we just want to enable publishing of a post withput restrictions
+        # if self.__get_post_status(path, revision) == self.PostStatus.UNPUBLISHED:
+        #     self.__set_post_status(path, status=self.PostStatus.PUBLISHED, revision=revision)
+        self.__set_post_status(path, status=self.PostStatus.PUBLISHED, revision=revision)
 
     def _unpublish(self, path):  # Unpublish a post
         # Latest revision for published post

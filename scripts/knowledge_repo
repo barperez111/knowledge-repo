@@ -175,6 +175,12 @@ submit = subparsers.add_parser('submit', help='Submit a knowledge post for revie
 submit.set_defaults(action='submit')
 submit.add_argument('path', help='The path of the knowledge post to submit for review.')
 
+
+publish = subparsers.add_parser('publish', help='publish a knowledge post.')
+publish.set_defaults(action='publish')
+publish.add_argument('path', help='The path of the knowledge post to submit for review.')
+
+
 push = subparsers.add_parser('push', help='DEPRECATED: Use `submit` instead.')
 push.set_defaults(action='push')
 push.add_argument('path', help='The path of the knowledge post to submit for review.')
@@ -287,6 +293,10 @@ if args.action == 'add':
     repo.add(kp, path=args.path, update=args.update, branch=args.branch, message=args.message, squash=args.squash)
     if not args.submit:
         sys.exit(0)
+
+if args.action == 'publish':
+    repo.publish(path=args.path)
+    sys.exit(0)
 
 if args.action in ['submit', 'push'] or (args.action == 'add' and args.submit):
     if args.action == 'push':
